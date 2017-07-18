@@ -1,0 +1,10 @@
+# Environment
+venv/
+.pylintrc
+.vscode/
+.env
+
+# Artifacts
+__pycache__/
+.cache/
+*.pyc
