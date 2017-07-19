@@ -127,7 +127,7 @@ a img {
 .wallet-login-section,
 .wallet-signup-section,
 .wallet-padded{
-    padding: 60px 0;
+    padding: 60px 0 60px 15px;
 }
 
 .wallet-padded-mini{
@@ -144,14 +144,29 @@ a img {
   padding-top: 12px;
 }
 
-.wallet-login .mdl-textfield,
-.wallet-signup .mdl-textfield{
+.mdl-textfield{
   width: 215px;
 }
 
 .wallet-login button,
-.wallet-signup button{
+.wallet-signup button,
+.wallet-expense button{
   display: block;
+}
+
+.wallet-history{
+  width: 100%;
+  max-height: 345px;
+  max-width: 480px;
+  overflow-y: auto;
+}
+
+.wallet-history .mdl-list__item{
+  border-bottom: 1px solid #757575;
+}
+
+.mdl-list__item-secondary-action{
+  display: inline-block !important;
 }
 
 .mdl-mega-footer{
