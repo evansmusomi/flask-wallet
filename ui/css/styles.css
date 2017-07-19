@@ -120,13 +120,18 @@ a img {
   bottom: 16px;
 }
 
-.content-grid{
+.content-grid, .wallet-colored{
   background-color: #E3F2FD;
 }
 
 .wallet-login-section,
-.wallet-signup-section{
+.wallet-signup-section,
+.wallet-padded{
     padding: 60px 0;
+}
+
+.wallet-padded-mini{
+  padding: 15px 0;
 }
 
 .wallet-slogan{
@@ -157,7 +162,8 @@ a img {
 /**** Mobile layout ****/
 @media (max-width: 900px) {
   .wallet-login-section,
-  .wallet-signup-section{
+  .wallet-signup-section,
+  .wallet-padded{
     padding: 25px 0;
   }
 }
