@@ -42,9 +42,9 @@
         <!-- Navigation -->
         <div class="wallet-navigation-container">
           <nav class="wallet-navigation mdl-navigation">
-            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">Home</a>
-            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">About</a>
-            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">Contacts</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_index')}}">Home</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_about')}}">About</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_contact')}}">Contacts</a>
           </nav>
         </div>
         <span class="wallet-mobile-title mdl-layout-title">
@@ -60,9 +60,9 @@
           <img class="wallet-logo-image" src="{{url_for('static', filename='images/logo.png')}}">
         </span>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">Home</a>
-        <a class="mdl-navigation__link" href="">About</a>
-        <a class="mdl-navigation__link" href="">Contacts</a>
+        <a class="mdl-navigation__link" href="{{url_for('page_index')}}">Home</a>
+        <a class="mdl-navigation__link" href="{{url_for('page_about')}}">About</a>
+        <a class="mdl-navigation__link" href="{{url_for('page_contact')}}">Contacts</a>
         <span class="mdl-navigation__link" href="">Version: 1.0</span>
       </nav>
     </div>
