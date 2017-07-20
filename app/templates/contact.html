@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <meta name="description" content="Get in touch with us for support on making better spending decisions.">
+    <title>Get in touch - Flask Wallet</title>
+{% endblock %}
+
+{% block content %}
+<div class="wallet-padded wallet-colored mdl-typography--text-center">
+    <div class="wallet-slogan">Get in touch.</div>
+    <div class="wallet-sub-slogan">We're here to help you get the most out of your finances.</div>
+    <div class="wallet-padded-mini">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            <i class="material-icons">contact_phone</i> Call
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            <i class="material-icons">contact_mail</i> Email
+        </button>
+    </div>
+</div>
+{% endblock %}

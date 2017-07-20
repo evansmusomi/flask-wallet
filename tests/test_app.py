@@ -30,3 +30,11 @@ class AppTestCase(unittest.TestCase):
                          "Response status should be 200 OK")
         self.assertIn("Spend or save?".encode(
             'utf-8'), response.data)
+
+    def test_contact_OK(self):
+        """ Tests GET / """
+        response = self.app.get('/contact')
+        self.assertEqual(response.status, "200 OK",
+                         "Response status should be 200 OK")
+        self.assertIn("Get in touch.".encode(
+            'utf-8'), response.data)
