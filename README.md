@@ -6,6 +6,8 @@
 
 Spend or save? What should you do with the money you have left? The Flask Wallet personal finance app will help you make such decisions.
 
+Product Roadmap: [Pivotal Tracker Board](https://www.pivotaltracker.com/n/projects/2081915)
+
 ## .env Sample
 
 SECRET_KEY = "SECRET"
