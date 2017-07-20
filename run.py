@@ -6,7 +6,8 @@ from app.routes import init_website_routes
 from flask import Flask
 
 # create Flask app
-app = Flask(__name__, template_folder='app/templates')
+app = Flask(__name__, template_folder='app/templates',
+            static_folder='app/static')
 app.config['SECRET_KEY'] = Config.SECRET_KEY
 
 # define routes
