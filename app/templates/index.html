@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <meta name="description" content="Introducing Flask Wallet, make better spending decisions.">
+    <title>Make Better Spending Decisions - Flask Wallet</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="content-grid mdl-grid">
+    <div class="wallet-login-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <div class="wallet-slogan">Spend or save?<br/>Make better decisions.</div>
+        <div class="wallet-sub-slogan">Set a wallet balance. Add expenses.<br/>Know when you're in the green or red financially.</div>
+        <form class="wallet-login">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" id="loginEmail" type="email">
+                <label class="mdl-textfield__label" for="loginEmail">Email</label>
+                <span class="mdl-textfield__error">Please Enter Valid Email Address</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" id="loginPassword" type="password">
+                <label class="mdl-textfield__label" for="loginPassword">Password</label>
+                <span class="mdl-textfield__error">Please Enter Valid Password</span>
+            </div>
+            <button class="form-submit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
+                name="login">
+        Login
+        </button>
+        </form>
+    </div>
+    <div class="wallet-signup-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <div class="wallet-slogan">Get Started.</div>
+        <div class="wallet-sub-slogan">Make better spending decisions.</div>
+        <form class="wallet-signup">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" id="signupEmail" type="email">
+                <label class="mdl-textfield__label" for="signupEmail">Email</label>
+                <span class="mdl-textfield__error">Please Enter Valid Email Address</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" id="signupPassword" type="password">
+                <label class="mdl-textfield__label" for="signupPassword">Password</label>
+                <span class="mdl-textfield__error">Please Enter Valid Password</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" id="signupName" type="text">
+                <label class="mdl-textfield__label" for="signupName">Name</label>
+                <span class="mdl-textfield__error">Please Enter Your Name</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" id="signupDeposit" type="number">
+                <label class="mdl-textfield__label" for="signupDeposit">Deposit Amount</label>
+                <span class="mdl-textfield__error">Please Enter Valid Amount</span>
+            </div>
+            <button class="form-submit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
+                name="signup">
+        Sign up
+        </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
