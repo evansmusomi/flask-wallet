@@ -5,6 +5,6 @@ install:
   "pip install -r requirements.txt"
 # command to run tests
 script: 
-  pytest --cov=app test
+  py.test --cov-report term-missin --cov app -v
 after_success:
   coveralls
