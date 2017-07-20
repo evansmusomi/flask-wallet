@@ -1,0 +1,186 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+
+/* Disable ugly boxes around images in IE10 */
+
+a img {
+    border: 0;
+}
+
+::-moz-selection {
+    background-color: #2196f3;
+    color: #fff;
+}
+
+::selection {
+    background-color: #2196f3;
+    color: #fff;
+}
+
+.wallet-search-box .mdl-textfield__input {
+    color: #000000;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.wallet-header .mdl-menu__container {
+    z-index: 50;
+    margin: 0;
+}
+
+.mdl-textfield--expandable {
+    width: auto;
+}
+
+.wallet-mobile-title {
+    display: none;
+}
+
+.wallet-logo-image {
+    height: 28px;
+    width: 140px;
+}
+
+.wallet-header {
+    overflow: visible;
+}
+
+.wallet-header .mdl-navigation__link {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.wallet-navigation-container {
+    /* Simple hack to make the overflow happen to the left instead... */
+    direction: rtl;
+    order: 1;
+    width: 500px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wallet-navigation {
+    /* ... and now make sure the content is actually LTR */
+    direction: ltr;
+    justify-content: flex-end;
+    width: 800px;
+}
+
+.wallet-search-box.is-focused+.wallet-navigation-container {
+    opacity: 0;
+    width: 100px;
+}
+
+.wallet-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: 60px;
+    line-height: 68px;
+    background-color: transparent;
+    border-bottom: 4px solid transparent;
+}
+
+.wallet-navigation .mdl-navigation__link:hover {
+    border-bottom: 4px solid #fff;
+}
+
+.wallet-search-box {
+    order: 2;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.wallet-drawer {
+    border-right: none;
+}
+
+.wallet-drawer-separator {
+  height: 1px;
+  background-color: #E3F2FD;
+  margin: 8px 0;
+}
+
+.wallet-drawer .mdl-navigation__link {
+  font-size: 14px;
+  color: #E3F2FD;
+}
+
+.wallet-drawer span.mdl-navigation__link {
+  color: #E3F2FD;
+  font-size: smaller;
+}
+
+.wallet-drawer .mdl-layout-title {
+  position: relative;
+  height: 160px;
+  background-color: #2196f3;
+}
+
+.wallet-drawer .wallet-logo-image {
+  position: absolute;
+  bottom: 16px;
+}
+
+.content-grid, .wallet-colored{
+  background-color: #E3F2FD;
+}
+
+.wallet-login-section,
+.wallet-signup-section,
+.wallet-padded{
+    padding: 60px 0 60px 15px;
+}
+
+.wallet-padded-mini{
+  padding: 15px 0;
+}
+
+.wallet-slogan{
+  font-size: 40px;
+  line-height: 1;
+}
+
+.wallet-sub-slogan{
+  font-size: 16px;
+  padding-top: 12px;
+}
+
+.mdl-textfield{
+  width: 215px;
+}
+
+.wallet-login button,
+.wallet-signup button,
+.wallet-expense button{
+  display: block;
+}
+
+.wallet-history{
+  width: 100%;
+  max-height: 345px;
+  max-width: 480px;
+  overflow-y: auto;
+}
+
+.wallet-history .mdl-list__item{
+  border-bottom: 1px solid #757575;
+}
+
+.mdl-list__item-secondary-action{
+  display: inline-block;
+}
+
+.mdl-mega-footer{
+  background-color: #fff;
+  color: #000000;
+  color: rgba(0,0,0,.87);
+}
+
+/**** Mobile layout ****/
+@media (max-width: 900px) {
+  .wallet-login-section,
+  .wallet-signup-section,
+  .wallet-padded{
+    padding: 25px 0;
+  }
+}
