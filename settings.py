@@ -1,10 +1,10 @@
 """ Loads environment configuration """
 import os
-import dotenv
+from dotenv import load_dotenv
 
 APP_ROOT = os.path.join(os.path.dirname(__file__), '')
 dotenv_path = os.path.join(APP_ROOT, '.env')
-dotenv.load(dotenv_path)
+load_dotenv(dotenv_path)
 
 
 class Config(object):
