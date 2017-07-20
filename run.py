@@ -1,12 +1,12 @@
 """ Flask Wallet APP definition """
 
 from settings import Config
-from routes import init_website_routes
+from app.routes import init_website_routes
 
 from flask import Flask
 
 # create Flask app
-app = Flask(__name__)
+app = Flask(__name__, template_folder='app/templates')
 app.config['SECRET_KEY'] = Config.SECRET_KEY
 
 # define routes
