@@ -23,3 +23,17 @@ class SignupForm(FlaskForm):
         NumberRange(min=0, message='Please deposit some money')])
 
     submit = SubmitField('Sign up')
+
+
+class LoginForm(FlaskForm):
+    """ Defines the log in form fields """
+
+    email = StringField('Email', validators=[
+        DataRequired('Please enter your email'),
+        Email('Please enter your email')])
+
+    password = PasswordField('Password', validators=[
+        DataRequired('Please enter your password'),
+        Length(min=4, message='Password must be 4 or more characters')])
+
+    submit = SubmitField('Log in')

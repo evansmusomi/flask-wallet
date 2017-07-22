@@ -1,0 +1,7 @@
+en:
+    login_successful: "Welcome back %{name}"
+    login_failed: "Things didn't work out. Please try again <3"
+    login_invalid: "Invalid login details"
+    signup_successful: "Sign up successful %{name}"
+    signup_failed: "Things didn't work out. Please try again <3"
+    signup_invalid: "Invalid signup details"

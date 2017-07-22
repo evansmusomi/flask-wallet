@@ -1,9 +1,9 @@
 """ Routes data requests """
 
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, session
 import i18n
 
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 from .dataservice import DataService
 
 # Add locales folder to translation path
@@ -15,6 +15,7 @@ DATA_SERVICE = DataService()
 
 def create_account():
     """ Creates new user account from signup form data """
+
     form = SignupForm()
 
     if form.validate():
@@ -23,10 +24,33 @@ def create_account():
             form.name.data, form.deposit.data)
 
         if new_user_id:
+            # Create new session and redirect to dashboard
             flash(i18n.t('wallet.signup_successful',
                          name=form.name.data), "success")
+            return redirect(url_for('page_dashboard'))
 
-        return redirect(url_for('page_index'))
+    flash(i18n.t('wallet.signup_invalid'), "error")
+    return render_template('index.html', signup_form=form, login_form=LoginForm())
 
-    flash(i18n.t('wallet.signup_details_invalid'), "error")
-    return render_template('index.html', signup_form=form)
+
+def login():
+    """ Authenticates users based on login form data """
+
+    form = LoginForm()
+
+    if form.validate():
+        authenticated_user = DATA_SERVICE.login(
+            form.email.data, form.password.data)
+
+        if authenticated_user:
+            # Create new session and redirect to dashboard
+            flash(i18n.t('wallet.login_successful',
+                         name=authenticated_user.name), "success")
+            session['email'] = form.email.data
+            return redirect(url_for('page_dashboard'))
+
+        flash(i18n.t('wallet.login_failed'), "error")
+        return render_template('index.html', login_form=form, signup_form=SignupForm())
+
+    flash(i18n.t('wallet.login_invalid'), "error")
+    return render_template('index.html', login_form=form, signup_form=SignupForm())

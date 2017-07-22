@@ -1,6 +1,0 @@
-{ "en":
-    {
-        "signup_successful": "Sign up successful %{name}",
-        "signup_details_invalid": "Signup details invalid"
-    }
-}

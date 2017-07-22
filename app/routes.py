@@ -1,14 +1,18 @@
 """ Defines application routes """
 
-from flask import render_template
-from .middleware import create_account
-from .forms import SignupForm
+from flask import render_template, session, redirect, url_for
+from .middleware import create_account, login
+from .forms import SignupForm, LoginForm
 
 
 def page_index():
     """ Renders index page """
+    if 'email' in session:
+        return redirect(url_for('page_dashboard'))
+
     signup_form = SignupForm()
-    return render_template('index.html', signup_form=signup_form)
+    login_form = LoginForm()
+    return render_template('index.html', signup_form=signup_form, login_form=login_form)
 
 
 def page_about():
@@ -23,6 +27,10 @@ def page_contact():
 
 def page_dashboard():
     """ Renders dashboard page """
+
+    if 'email' not in session:
+        return redirect(url_for('page_index'))
+
     return render_template('dashboard.html')
 
 
@@ -38,3 +46,5 @@ def initialize_website_routes(app):
                          page_dashboard, methods=['GET'])
         app.add_url_rule('/signup', 'create_account',
                          create_account, methods=['POST'])
+        app.add_url_rule('/login', 'login',
+                         login, methods=['POST'])

@@ -1,6 +1,6 @@
 """ Model definitions """
 import uuid
-from werkzeug import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User:
@@ -11,13 +11,13 @@ class User:
         """ Initializes user object """
         self.__id = uuid.uuid4()
         self.email = email.lower()
-        self.password_hash = self.set_password(password)
+        self.password_hash = generate_password_hash(password)
         self.name = name.title()
         self.balance = deposit
 
-    def set_password(self, password):
-        """ Generates password hash from password """
-        self.password_hash = generate_password_hash(password)
+    def check_password(self, password):
+        """ Compares password hash with password """
+        return check_password_hash(self.password_hash, password)
 
     @property
     def id(self):
