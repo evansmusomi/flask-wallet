@@ -16,6 +16,7 @@ class AppTestCase(unittest.TestCase):
         """ Sets up env for tests """
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
+        app.config['SECRET_KEY'] = 'secret-key'
         self.app = app.test_client()
 
         self.dataservice = DataService()
