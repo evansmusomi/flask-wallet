@@ -5,3 +5,4 @@ en:
     signup_successful: "Sign up successful %{name}"
     signup_failed: "Things didn't work out. Please try again <3"
     signup_invalid: "Invalid signup details"
+    logged_out: "Goodbye, see you soon!"

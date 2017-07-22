@@ -27,6 +27,7 @@ def create_account():
             # Create new session and redirect to dashboard
             flash(i18n.t('wallet.signup_successful',
                          name=form.name.data), "success")
+            session['email'] = form.email.data
             return redirect(url_for('page_dashboard'))
 
     flash(i18n.t('wallet.signup_invalid'), "error")
@@ -54,3 +55,10 @@ def login():
 
     flash(i18n.t('wallet.login_invalid'), "error")
     return render_template('index.html', login_form=form, signup_form=SignupForm())
+
+
+def logout():
+    """ Clears user session and redirects to index page """
+    session.pop('email', None)
+    flash(i18n.t('wallet.logged_out'), "success")
+    return redirect(url_for('page_index'))

@@ -142,3 +142,14 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.status, "200 OK")
         self.assertIn(i18n.t('wallet.login_invalid'),
                       html.unescape(response.data.decode("utf-8")))
+
+    def test_log_out_OK(self):
+        """ Tests log out works for logged in users """
+        with self.app.session_transaction() as session:
+            session['email'] = 'john@doe.com'
+
+        response = self.app.get('/logout', follow_redirects=True)
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t('wallet.logged_out'),
+                      html.unescape(response.data.decode("utf-8")))

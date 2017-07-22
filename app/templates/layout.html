@@ -45,6 +45,9 @@
             <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_index')}}">Home</a>
             <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_about')}}">About</a>
             <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_contact')}}">Contacts</a>
+            {% if logged_in %}
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('logout')}}">Log Out</a>
+            {% endif %}
           </nav>
         </div>
         <span class="wallet-mobile-title mdl-layout-title">
@@ -63,6 +66,9 @@
         <a class="mdl-navigation__link" href="{{url_for('page_index')}}">Home</a>
         <a class="mdl-navigation__link" href="{{url_for('page_about')}}">About</a>
         <a class="mdl-navigation__link" href="{{url_for('page_contact')}}">Contacts</a>
+        {% if logged_in %}
+        <a class="mdl-navigation__link" href="{{url_for('logout')}}">Log Out</a>
+        {% endif %}
         <span class="mdl-navigation__link" href="">Version: 1.0</span>
       </nav>
     </div>
