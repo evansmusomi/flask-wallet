@@ -31,31 +31,40 @@
     <div class="wallet-signup-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
         <div class="wallet-slogan">Get Started.</div>
         <div class="wallet-sub-slogan">Make better spending decisions.</div>
-        <form class="wallet-signup">
+        <form class="wallet-signup" method="POST" action="/signup">
+            {{ signup_form.hidden_tag() }}
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" id="signupEmail" type="email">
-                <label class="mdl-textfield__label" for="signupEmail">Email</label>
-                <span class="mdl-textfield__error">Please Enter Valid Email Address</span>
+                {{ signup_form.email(class_="mdl-textfield__input", type="email") }}
+                <label class="mdl-textfield__label" for="signupEmail">{{ signup_form.email.label }}</label>
+                <span class="mdl-textfield__error">
+                    Please Enter Valid Email Address
+                </span>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" id="signupPassword" type="password">
-                <label class="mdl-textfield__label" for="signupPassword">Password</label>
-                <span class="mdl-textfield__error">Please Enter Valid Password</span>
+                {{ signup_form.password(class_="mdl-textfield__input", type="password") }}
+                <label class="mdl-textfield__label" for="signupPassword">{{ signup_form.password.label }}</label>
+                <span class="mdl-textfield__error">
+                    Please Enter Valid Password
+                </span>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" id="signupName" type="text">
-                <label class="mdl-textfield__label" for="signupName">Name</label>
-                <span class="mdl-textfield__error">Please Enter Your Name</span>
+                {{ signup_form.name(class_="mdl-textfield__input") }}
+                <label class="mdl-textfield__label" for="signupName">{{ signup_form.name.label }}</label>
+                <span class="mdl-textfield__error">
+                    Please Enter Your Name
+                </span>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" id="signupDeposit" type="number">
-                <label class="mdl-textfield__label" for="signupDeposit">Deposit Amount</label>
-                <span class="mdl-textfield__error">Please Enter Valid Amount</span>
+                {{ signup_form.deposit(class_="mdl-textfield__input", type="number") }}    
+                <label class="mdl-textfield__label" for="signupDeposit">{{ signup_form.deposit.label }}</label>
+                <span class="mdl-textfield__error">
+                    Please Enter Valid Amount
+                </span>
             </div>
             <button class="form-submit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
-                name="signup">
-        Sign up
-        </button>
+                name="submit">
+                Sign up
+            </button>
         </form>
     </div>
 </div>

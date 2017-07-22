@@ -176,6 +176,23 @@ a img {
   color: rgba(0,0,0,.87);
 }
 
+.flashes{
+    background-color: #90CAF9;
+}
+
+.mdl-chip{
+    background-color: #424242;
+    color: #fff;
+}
+
+.mdl-chip.success{
+    background-color: #4CAF50;
+}
+
+.mdl-chip.error{
+    background-color: #F44336;
+}
+
 /**** Mobile layout ****/
 @media (max-width: 900px) {
   .wallet-login-section,
