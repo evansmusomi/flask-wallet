@@ -1,6 +1,10 @@
 """ Contains application tests mapped to routes defined """
 import unittest
+import i18n
 from run import app
+
+# Add locales folder to translation path
+i18n.load_path.append('app/locales')
 
 
 class AppTestCase(unittest.TestCase):
@@ -53,7 +57,8 @@ class AppTestCase(unittest.TestCase):
             '/signup', data=new_user_info, follow_redirects=True)
 
         self.assertEqual(response.status, "200 OK")
-        self.assertIn("Sign up successful".encode('utf-8'), response.data)
+        self.assertIn(i18n.t('wallet.signup_successful',
+                             name="Name").encode('utf-8'), response.data)
 
     def test_create_account_INVALID(self):
         """ Tests sign up with invalid details """
@@ -66,7 +71,8 @@ class AppTestCase(unittest.TestCase):
             '/signup', data=new_user_info)
 
         self.assertEqual(response.status, "200 OK")
-        self.assertIn("Signup details invalid".encode('utf-8'), response.data)
+        self.assertIn(i18n.t('wallet.signup_details_invalid').encode(
+            'utf-8'), response.data)
 
     def test_dashboard_OK(self):
         """ Tests GET /dashboard """
