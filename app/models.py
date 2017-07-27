@@ -13,11 +13,15 @@ class User:
         self.email = email.lower()
         self.password_hash = generate_password_hash(password)
         self.name = name.title()
-        self.balance = deposit
+        self.__balance = deposit
 
     def check_password(self, password):
         """ Compares password hash with password """
         return check_password_hash(self.password_hash, password)
+
+    def get_balance(self):
+        """ Returns account balance """
+        return self.__balance
 
     @property
     def id(self):

@@ -26,3 +26,10 @@ class DataService:
                 return user
 
         return False
+
+    def load_user_balance(self, email):
+        """ Gets user account balance """
+        if email in self.USERS:
+            return self.USERS[email].get_balance()
+
+        return None

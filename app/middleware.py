@@ -62,3 +62,10 @@ def logout():
     session.pop('email', None)
     flash(i18n.t('wallet.logged_out'), "success")
     return redirect(url_for('page_index'))
+
+
+def load_user_balance():
+    """ Gets user account balance """
+
+    account_balance = DATA_SERVICE.load_user_balance(session['email'])
+    return account_balance

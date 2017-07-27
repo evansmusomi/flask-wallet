@@ -1,7 +1,7 @@
 """ Defines application routes """
 
 from flask import render_template, session, redirect, url_for
-from .middleware import create_account, login, logout
+from .middleware import create_account, login, logout, load_user_balance
 from .forms import SignupForm, LoginForm
 
 
@@ -31,7 +31,8 @@ def page_dashboard():
     if 'email' not in session:
         return redirect(url_for('page_index'))
 
-    return render_template('dashboard.html', logged_in=True)
+    account_balance = load_user_balance()
+    return render_template('dashboard.html', logged_in=True, balance=account_balance)
 
 
 def initialize_website_routes(app):

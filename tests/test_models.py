@@ -17,3 +17,9 @@ class AppTestUser(unittest.TestCase):
     def test_password_is_hashed(self):
         """ Tests plain password isn't stored """
         self.assertNotEqual(self.user.password_hash, 'secret')
+
+    def test_get_balance(self):
+        """ Tests account balance is returned """
+        actual = self.user.get_balance()
+        expected = 200
+        self.assertEqual(actual, expected)

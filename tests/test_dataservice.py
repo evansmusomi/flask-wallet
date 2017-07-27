@@ -43,3 +43,14 @@ class AppTestDataService(unittest.TestCase):
         actual = self.dataservice.login('john@doe.com', 'wrong-password')
         expected = False
         self.assertEqual(actual, expected)
+
+    def test_load_user_balance_OK(self):
+        """ Tests user balance is loaded OK for valid user """
+        actual = self.dataservice.load_user_balance('john@doe.com')
+        expected = 500
+        self.assertEqual(actual, expected)
+
+    def test_load_user_balance_INVALID(self):
+        """ Tests None is returned when balance is queried for invalid user """
+        actual = self.dataservice.load_user_balance('invalid@user.com')
+        self.assertIsNone(actual)
