@@ -93,3 +93,10 @@ def get_user_expenses():
     """ Gets user expenses """
     account_expenses = DATA_SERVICE.get_user_expenses(session['email'])
     return account_expenses
+
+
+def get_user_expense_by_id(expense_id):
+    """ Gets user expense with specified expense id """
+    account_expense = DATA_SERVICE.get_user_expense_by_id(
+        expense_id, session['email'])
+    return account_expense

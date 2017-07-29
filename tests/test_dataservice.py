@@ -91,3 +91,31 @@ class AppTestDataService(unittest.TestCase):
         actual = self.dataservice.get_user_expenses('invalid@user.com')
         expected = i18n.t('wallet.wallet_not_found')
         self.assertEqual(actual, expected)
+
+    def test_get_user_expense_by_id_OK(self):
+        """ Tests getting an expense by a valid ID works """
+        self.dataservice.add_expense('john@doe.com', 50, 'matatu')
+        expense = self.dataservice.USERS['john@doe.com'].expenses[0]
+        actual = self.dataservice.get_user_expense_by_id(
+            expense.id, 'john@doe.com')
+        self.assertEqual(actual, expense)
+
+    def test_get_user_expense_by_id_INVALID_USER(self):
+        """ Tests getting an expense by ID for an invalid user """
+        self.dataservice.add_expense('john@doe.com', 50, 'matatu')
+        expense = self.dataservice.USERS['john@doe.com'].expenses[0]
+
+        expected = i18n.t('wallet.wallet_not_found')
+        actual = self.dataservice.get_user_expense_by_id(
+            expense.id, 'invalid@user.com')
+        self.assertEqual(actual, expected)
+
+    def test_get_user_expense_by_id_INVALID_EXPENSE(self):
+        """ Tests getting an expense using an invalid expense ID """
+        self.dataservice.add_expense('john@doe.com', 50, 'matatu')
+        expense = self.dataservice.USERS['john@doe.com'].expenses[0]
+
+        expected = i18n.t('wallet.expense_not_found')
+        actual = self.dataservice.get_user_expense_by_id(
+            'RANDOMID', 'john@doe.com')
+        self.assertEqual(actual, expected)

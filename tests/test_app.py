@@ -109,7 +109,6 @@ class AppTestCase(unittest.TestCase):
 
     def test_log_in_OK(self):
         """ Tests log in with valid details """
-        # setup a valid user
         self.dataservice.create_account('john@doe.com', 'secret', 'John', 500)
 
         user_info = dict(
@@ -157,11 +156,7 @@ class AppTestCase(unittest.TestCase):
 
     def test_add_expense_OK(self):
         """ Tests add expense with valid inputs """
-        # setup a valid user
-        self.dataservice.create_account('john@doe.com', 'secret', 'John', 500)
-
-        with self.app.session_transaction() as session:
-            session['email'] = 'john@doe.com'
+        self.create_account_and_session()
 
         expense_info = dict(
             amount=40,
@@ -169,7 +164,7 @@ class AppTestCase(unittest.TestCase):
         )
 
         response = self.app.post(
-            '/add_expense', data=expense_info, follow_redirects=True)
+            '/expenses', data=expense_info, follow_redirects=True)
 
         self.assertEqual(response.status, "200 OK")
         self.assertIn(i18n.t('wallet.expense_added'),
@@ -183,25 +178,51 @@ class AppTestCase(unittest.TestCase):
         )
 
         response = self.app.post(
-            '/add_expense', data=expense_info)
+            '/expenses', data=expense_info)
 
         self.assertEqual(response.status, "302 FOUND")
 
     def test_add_expense_INVALID(self):
         """ Tests add expense with invalid inputs """
-        # setup a valid user
-        self.dataservice.create_account('john@doe.com', 'secret', 'John', 500)
-
-        with self.app.session_transaction() as session:
-            session['email'] = 'john@doe.com'
+        self.create_account_and_session()
 
         expense_info = dict(
             note="matatu"
         )
 
         response = self.app.post(
-            '/add_expense', data=expense_info, follow_redirects=True)
+            '/expenses', data=expense_info, follow_redirects=True)
 
         self.assertEqual(response.status, "200 OK")
         self.assertIn(i18n.t('wallet.expense_invalid'),
                       html.unescape(response.data.decode("utf-8")))
+
+    def create_account_and_session(self):
+        """ Creates an account and session """
+        self.dataservice.create_account('john@doe.com', 'secret', 'John', 500)
+
+        with self.app.session_transaction() as session:
+            session['email'] = 'john@doe.com'
+
+    def test_edit_expense_OK(self):
+        """ Tests editing an expense GET /expenses/<expense_id> """
+        self.create_account_and_session()
+        self.dataservice.add_expense('john@doe.com', 200, 'shopping')
+        expense = self.dataservice.USERS['john@doe.com'].expenses[0]
+
+        response = self.app.get("/expenses/{}".format(expense.id))
+        self.assertEqual(response.status, "200 OK",
+                         "Response status should be 200 OK")
+        self.assertIn("Edit Expense".encode(
+            'utf-8'), response.data)
+        self.assertIn(str(expense.amount).encode('utf-8'), response.data)
+        self.assertIn(str(expense.note).encode('utf-8'), response.data)
+
+    def test_edit_expense_LOGGED_OUT(self):
+        """ Tests editing an expense while not logged in """
+
+        self.dataservice.add_expense('john@doe.com', 200, 'shopping')
+        expense = self.dataservice.USERS['john@doe.com'].expenses[0]
+
+        response = self.app.get("/expenses/{}".format(expense.id))
+        self.assertEqual(response.status, "302 FOUND")
