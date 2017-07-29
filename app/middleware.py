@@ -66,7 +66,6 @@ def logout():
 
 def load_user_balance():
     """ Gets user account balance """
-
     account_balance = DATA_SERVICE.load_user_balance(session['email'])
     return account_balance
 
@@ -86,4 +85,11 @@ def add_expense():
 
     flash(i18n.t('wallet.expense_invalid'), "error")
     add_expense_form = AddExpenseForm()
-    return render_template('dashboard.html', logged_in=True, balance=load_user_balance(), expense_form=add_expense_form)
+    user_expenses = get_user_expenses()
+    return render_template('dashboard.html', logged_in=True, balance=load_user_balance(), expense_form=add_expense_form, expenses=user_expenses)
+
+
+def get_user_expenses():
+    """ Gets user expenses """
+    account_expenses = DATA_SERVICE.get_user_expenses(session['email'])
+    return account_expenses

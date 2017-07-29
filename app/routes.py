@@ -2,7 +2,7 @@
 
 from flask import render_template, session, redirect, url_for
 from .middleware import create_account, login, logout
-from .middleware import load_user_balance, add_expense
+from .middleware import load_user_balance, add_expense, get_user_expenses
 from .forms import SignupForm, LoginForm, AddExpenseForm
 
 
@@ -33,8 +33,9 @@ def page_dashboard():
         return redirect(url_for('page_index'))
 
     account_balance = load_user_balance()
+    user_expenses = get_user_expenses()
     add_expense_form = AddExpenseForm()
-    return render_template('dashboard.html', logged_in=True, balance=account_balance, expense_form=add_expense_form)
+    return render_template('dashboard.html', logged_in=True, balance=account_balance, expense_form=add_expense_form, expenses=user_expenses)
 
 
 def initialize_website_routes(app):

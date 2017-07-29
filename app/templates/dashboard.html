@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="content-grid mdl-grid">
-    <div class="wallet-padded wallet-dashboard-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+    <div class="wallet-padded-mini wallet-dashboard-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
         <div class="wallet-slogan">KES {{ balance }}</div>
         <div class="wallet-sub-slogan">Left to spend!</div>
         <form class="wallet-expense" method="POST" action="/add_expense">
@@ -27,23 +27,25 @@
             </button>
         </form>
     </div>
-    <div class="wallet-padded wallet-history-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-        <div class="wallet-slogan">History</div>
+    <div class="wallet-padded-mini wallet-history-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+        <div class="wallet-slogan">History..</div>
         <ul class="wallet-history mdl-list">
+            {% for expense in expenses|reverse %}
             <li class="mdl-list__item mdl-list__item--two-line">
             <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-avatar">money_off</i>
-                <span>KES 1,500</span>
-                <span class="mdl-list__item-sub-title">Nakumatt</span>
+                <span>{{ expense['amount'] }}</span>
+                <span class="mdl-list__item-sub-title">{{ expense['note'] }}</span>
             </span>
             <span class="mdl-list__item-secondary-content">
-                <span class="mdl-list__item-secondary-info">19/07/2017</span>
+                <span class="mdl-list__item-secondary-info">{{ expense['transaction_date'] }}</span>
                 <span class="mdl-list__item-secondary-actions">
                 <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">mode_edit</i></a>
                 <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">delete</i></a>
                 </span>
             </span>
             </li>
+            {% endfor %}
         </ul>
     </div>
 </div>

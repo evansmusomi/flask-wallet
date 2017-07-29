@@ -79,3 +79,15 @@ class AppTestDataService(unittest.TestCase):
         actual = self.dataservice.add_expense('invalid@user.com', 50, 'matatu')
         expected = i18n.t('wallet.wallet_not_found')
         self.assertEqual(actual, expected)
+
+    def test_get_user_expenses_OK(self):
+        """ Tests user expenses are loaded OK for valid user """
+        actual = self.dataservice.get_user_expenses('john@doe.com')
+        expected = self.user.expenses
+        self.assertEqual(actual, expected)
+
+    def test_get_user_expenses_INVALID(self):
+        """ Tests getting expenses from invalid user account """
+        actual = self.dataservice.get_user_expenses('invalid@user.com')
+        expected = i18n.t('wallet.wallet_not_found')
+        self.assertEqual(actual, expected)

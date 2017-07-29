@@ -49,3 +49,10 @@ class DataService:
             return i18n.t('wallet.expense_added')
 
         return i18n.t('wallet.wallet_not_found')
+
+    def get_user_expenses(self, email):
+        """ Gets user's expenses """
+        if email in self.USERS:
+            return self.USERS[email].expenses
+
+        return i18n.t('wallet.wallet_not_found')
