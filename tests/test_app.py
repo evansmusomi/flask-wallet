@@ -154,6 +154,18 @@ class AppTestCase(unittest.TestCase):
         self.assertIn(i18n.t('wallet.logged_out'),
                       html.unescape(response.data.decode("utf-8")))
 
+    def test_add_expense_LOGGED_OUT(self):
+        """ Tests add expense by logged out user """
+        expense_info = dict(
+            amount=40,
+            note="matatu"
+        )
+
+        response = self.app.post(
+            '/expenses', data=expense_info)
+
+        self.assertEqual(response.status, "302 FOUND")
+
     def test_add_expense_OK(self):
         """ Tests add expense with valid inputs """
         self.create_account_and_session()
@@ -169,18 +181,6 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.status, "200 OK")
         self.assertIn(i18n.t('wallet.expense_added'),
                       html.unescape(response.data.decode("utf-8")))
-
-    def test_add_expense_LOGGED_OUT(self):
-        """ Tests add expense by logged out user """
-        expense_info = dict(
-            amount=40,
-            note="matatu"
-        )
-
-        response = self.app.post(
-            '/expenses', data=expense_info)
-
-        self.assertEqual(response.status, "302 FOUND")
 
     def test_add_expense_INVALID(self):
         """ Tests add expense with invalid inputs """
@@ -204,11 +204,15 @@ class AppTestCase(unittest.TestCase):
         with self.app.session_transaction() as session:
             session['email'] = 'john@doe.com'
 
+    def create_expense(self):
+        """ Creates example expense by John Doe """
+        self.dataservice.add_expense('john@doe.com', 200, 'shopping')
+        return self.dataservice.USERS['john@doe.com'].expenses[0]
+
     def test_edit_expense_OK(self):
         """ Tests editing an expense GET /expenses/<expense_id> """
         self.create_account_and_session()
-        self.dataservice.add_expense('john@doe.com', 200, 'shopping')
-        expense = self.dataservice.USERS['john@doe.com'].expenses[0]
+        expense = self.create_expense()
 
         response = self.app.get("/expenses/{}".format(expense.id))
         self.assertEqual(response.status, "200 OK",
@@ -221,8 +225,56 @@ class AppTestCase(unittest.TestCase):
     def test_edit_expense_LOGGED_OUT(self):
         """ Tests editing an expense while not logged in """
 
-        self.dataservice.add_expense('john@doe.com', 200, 'shopping')
-        expense = self.dataservice.USERS['john@doe.com'].expenses[0]
+        expense = self.create_expense()
 
         response = self.app.get("/expenses/{}".format(expense.id))
         self.assertEqual(response.status, "302 FOUND")
+
+    def test_update_expense_LOGGED_OUT(self):
+        """ Tests update expense by logged out user """
+        expense = self.create_expense()
+
+        expense_info = dict(
+            amount=100,
+            note="matatu"
+        )
+
+        response = self.app.post(
+            "/expenses/{}".format(expense.id), data=expense_info)
+
+        self.assertEqual(response.status, "302 FOUND")
+
+    def test_update_expense_OK(self):
+        """ Tests add expense with valid inputs """
+        self.create_account_and_session()
+
+        expense = self.create_expense()
+
+        expense_info = dict(
+            amount=100,
+            note="matatu"
+        )
+
+        response = self.app.post(
+            "/expenses/{}".format(expense.id), data=expense_info, follow_redirects=True)
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t('wallet.expense_updated'),
+                      html.unescape(response.data.decode("utf-8")))
+
+    def test_update_expense_INVALID(self):
+        """ Tests add expense with invalid inputs """
+        self.create_account_and_session()
+
+        expense = self.create_expense()
+
+        expense_info = dict(
+            amount=100
+        )
+
+        response = self.app.post(
+            "/expenses/{}".format(expense.id), data=expense_info)
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t('wallet.expense_invalid'),
+                      html.unescape(response.data.decode("utf-8")))

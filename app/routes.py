@@ -2,8 +2,8 @@
 
 from flask import render_template, session, redirect, url_for
 from .middleware import create_account, login, logout
-from .middleware import load_user_balance, get_user_expenses
-from .middleware import add_expense, get_user_expense_by_id
+from .middleware import load_user_balance, get_user_expenses, get_user_expense_by_id
+from .middleware import add_expense, update_expense
 from .forms import SignupForm, LoginForm, AddExpenseForm
 
 
@@ -46,7 +46,7 @@ def page_edit_expense(expense_id):
         return redirect(url_for('page_index'))
 
     user_expense = get_user_expense_by_id(expense_id)
-    return render_template('edit_expense.html', logged_in=True, expense_form=AddExpenseForm(obj=user_expense))
+    return render_template('edit_expense.html', logged_in=True, expense_form=AddExpenseForm(obj=user_expense), expense_id=expense_id)
 
 
 def initialize_website_routes(app):
@@ -66,3 +66,5 @@ def initialize_website_routes(app):
                          add_expense, methods=['POST'])
         app.add_url_rule('/expenses/<string:expense_id>', 'page_edit_expense',
                          page_edit_expense, methods=['GET'])
+        app.add_url_rule('/expenses/<string:expense_id>', 'update_expense',
+                         update_expense, methods=['POST'])

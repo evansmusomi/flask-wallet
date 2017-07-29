@@ -8,7 +8,7 @@
 {% block content %}
 <div class="wallet-padded wallet-colored">
     <div class="wallet-slogan">Edit Expense</div>
-    <form class="wallet-expense" method="PUT" action="/expenses">
+    <form class="wallet-expense" method="POST" action="/expenses/{{expense_id}}">
         {{ expense_form.hidden_tag() }}
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         {{ expense_form.amount(class_="mdl-textfield__input", type="number") }}
