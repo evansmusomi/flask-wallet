@@ -1,6 +1,11 @@
 """ Contains application tests mapped to data service """
 import unittest
+import datetime
+import i18n
 from app.dataservice import DataService
+
+# Add locales folder to translation path
+i18n.load_path.append('app/locales')
 
 
 class AppTestDataService(unittest.TestCase):
@@ -12,6 +17,11 @@ class AppTestDataService(unittest.TestCase):
         self.dataservice.create_account(
             'john@doe.com', 'secret', 'John', 500)
         self.user = self.dataservice.USERS['john@doe.com']
+
+    def tearDown(self):
+        """ Clears env for tests """
+        self.dataservice = None
+        self.user = None
 
     def test_user_account_created(self):
         """ Tests user account is created successfully """
@@ -41,16 +51,31 @@ class AppTestDataService(unittest.TestCase):
     def test_login_with_wrong_credentials(self):
         """ Tests invalid user doesn't log in successfully """
         actual = self.dataservice.login('john@doe.com', 'wrong-password')
-        expected = False
+        expected = None
         self.assertEqual(actual, expected)
 
     def test_load_user_balance_OK(self):
         """ Tests user balance is loaded OK for valid user """
         actual = self.dataservice.load_user_balance('john@doe.com')
-        expected = 500
+        expected = self.user.get_balance()
         self.assertEqual(actual, expected)
 
     def test_load_user_balance_INVALID(self):
         """ Tests None is returned when balance is queried for invalid user """
         actual = self.dataservice.load_user_balance('invalid@user.com')
-        self.assertIsNone(actual)
+        expected = i18n.t('wallet.wallet_not_found')
+        self.assertEqual(actual, expected)
+
+    def test_add_expense_OK(self):
+        """ Tests adding expenses works fine """
+        initial_balance = self.dataservice.load_user_balance('john@doe.com')
+        self.dataservice.add_expense('john@doe.com', 50, 'matatu')
+        expected = initial_balance - 50
+        actual = self.dataservice.load_user_balance('john@doe.com')
+        self.assertEqual(actual, expected)
+
+    def test_add_expense_INVALID_USER(self):
+        """ Tests adding expenses to invalid user accounts """
+        actual = self.dataservice.add_expense('invalid@user.com', 50, 'matatu')
+        expected = i18n.t('wallet.wallet_not_found')
+        self.assertEqual(actual, expected)

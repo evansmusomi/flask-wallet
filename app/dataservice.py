@@ -1,13 +1,19 @@
 """ Defines data layer wrapper """
-from .models import User
+import datetime
+import i18n
+from .models import User, Expense
+
+# Add locales folder to translation path
+i18n.load_path.append('app/locales')
 
 
 class DataService:
     """ Provides data to the rest of the app """
+    USERS = {}
 
     def __init__(self):
         """ Initializes data service """
-        self.USERS = {}
+        pass
 
     def create_account(self, email, password, name, deposit):
         """ Adds user to data store """
@@ -25,11 +31,21 @@ class DataService:
             if user.check_password(password):
                 return user
 
-        return False
+        return None
 
     def load_user_balance(self, email):
         """ Gets user account balance """
         if email in self.USERS:
             return self.USERS[email].get_balance()
 
-        return None
+        return i18n.t('wallet.wallet_not_found')
+
+    def add_expense(self, email, amount, note):
+        """ Adds expense to user account """
+        if email in self.USERS:
+            transaction_date = datetime.date.today().strftime('%Y/%m/%d')
+            expense = Expense(amount, note, transaction_date)
+            self.USERS[email].add_expense(expense)
+            return i18n.t('wallet.expense_added')
+
+        return i18n.t('wallet.wallet_not_found')

@@ -1,8 +1,9 @@
 """ Defines application routes """
 
 from flask import render_template, session, redirect, url_for
-from .middleware import create_account, login, logout, load_user_balance
-from .forms import SignupForm, LoginForm
+from .middleware import create_account, login, logout
+from .middleware import load_user_balance, add_expense
+from .forms import SignupForm, LoginForm, AddExpenseForm
 
 
 def page_index():
@@ -32,7 +33,8 @@ def page_dashboard():
         return redirect(url_for('page_index'))
 
     account_balance = load_user_balance()
-    return render_template('dashboard.html', logged_in=True, balance=account_balance)
+    add_expense_form = AddExpenseForm()
+    return render_template('dashboard.html', logged_in=True, balance=account_balance, expense_form=add_expense_form)
 
 
 def initialize_website_routes(app):
@@ -48,3 +50,5 @@ def initialize_website_routes(app):
                          create_account, methods=['POST'])
         app.add_url_rule('/login', 'login', login, methods=['POST'])
         app.add_url_rule('/logout', 'logout', logout, methods=['GET'])
+        app.add_url_rule('/add_expense', 'add_expense',
+                         add_expense, methods=['POST'])

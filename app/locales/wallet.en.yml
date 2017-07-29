@@ -6,3 +6,7 @@ en:
     signup_failed: "Things didn't work out. Please try again <3"
     signup_invalid: "Invalid signup details"
     logged_out: "Goodbye, see you soon!"
+    user_not_found: "User not found"
+    wallet_not_found: "Wallet not found"
+    expense_added: "Expense added"
+    expense_invalid: "Invalid expense details"

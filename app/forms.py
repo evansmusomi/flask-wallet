@@ -20,7 +20,8 @@ class SignupForm(FlaskForm):
         DataRequired('Please enter your first name')])
 
     deposit = DecimalField('Deposit Amount', validators=[
-        NumberRange(min=0, message='Please deposit some money')])
+        DataRequired('Please add a deposit amount'),
+        NumberRange(min=0, message='Please enter a valid number')])
 
     submit = SubmitField('Sign up')
 
@@ -37,3 +38,14 @@ class LoginForm(FlaskForm):
         Length(min=4, message='Password must be 4 or more characters')])
 
     submit = SubmitField('Log in')
+
+
+class AddExpenseForm(FlaskForm):
+    """ Defines the add expense form fields """
+
+    amount = DecimalField('Amount', validators=[
+        DataRequired('Please enter an amount'),
+        NumberRange(min=0, max=9999999999, message='Please enter a valid number')])
+
+    note = StringField('Note', validators=[
+        DataRequired('Please add a note')])

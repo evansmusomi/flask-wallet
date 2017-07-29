@@ -21,6 +21,9 @@ class AppTestCase(unittest.TestCase):
 
         self.dataservice = DataService()
 
+        with self.app.session_transaction() as session:
+            session.pop('email', None)
+
     def tearDown(self):
         """ Tears down after tests """
         self.dataservice.USERS = None
@@ -89,9 +92,6 @@ class AppTestCase(unittest.TestCase):
 
     def test_dashboard_OK_VISITOR(self):
         """ Tests GET /dashboard when not logged in """
-        with self.app.session_transaction() as session:
-            session.pop('email', None)
-
         response = self.app.get('/dashboard')
         self.assertEqual(response.status, "302 FOUND",
                          "Response status should be 302 FOUND")
@@ -153,4 +153,55 @@ class AppTestCase(unittest.TestCase):
 
         self.assertEqual(response.status, "200 OK")
         self.assertIn(i18n.t('wallet.logged_out'),
+                      html.unescape(response.data.decode("utf-8")))
+
+    def test_add_expense_OK(self):
+        """ Tests add expense with valid inputs """
+        # setup a valid user
+        self.dataservice.create_account('john@doe.com', 'secret', 'John', 500)
+
+        with self.app.session_transaction() as session:
+            session['email'] = 'john@doe.com'
+
+        expense_info = dict(
+            amount=40,
+            note="matatu"
+        )
+
+        response = self.app.post(
+            '/add_expense', data=expense_info, follow_redirects=True)
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t('wallet.expense_added'),
+                      html.unescape(response.data.decode("utf-8")))
+
+    def test_add_expense_LOGGED_OUT(self):
+        """ Tests add expense by logged out user """
+        expense_info = dict(
+            amount=40,
+            note="matatu"
+        )
+
+        response = self.app.post(
+            '/add_expense', data=expense_info)
+
+        self.assertEqual(response.status, "302 FOUND")
+
+    def test_add_expense_INVALID(self):
+        """ Tests add expense with invalid inputs """
+        # setup a valid user
+        self.dataservice.create_account('john@doe.com', 'secret', 'John', 500)
+
+        with self.app.session_transaction() as session:
+            session['email'] = 'john@doe.com'
+
+        expense_info = dict(
+            note="matatu"
+        )
+
+        response = self.app.post(
+            '/add_expense', data=expense_info, follow_redirects=True)
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t('wallet.expense_invalid'),
                       html.unescape(response.data.decode("utf-8")))

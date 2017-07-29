@@ -10,15 +10,16 @@
     <div class="wallet-padded wallet-dashboard-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
         <div class="wallet-slogan">KES {{ balance }}</div>
         <div class="wallet-sub-slogan">Left to spend!</div>
-        <form class="wallet-expense">
+        <form class="wallet-expense" method="POST" action="/add_expense">
+            {{ expense_form.hidden_tag() }}
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" id="expenseAmount" type="number">
-            <label class="mdl-textfield__label" for="expenseAmount">Amount</label>
+            {{ expense_form.amount(class_="mdl-textfield__input", type="number") }}
+            <label class="mdl-textfield__label" for="expenseAmount">{{ expense_form.amount.label }}</label>
             <span class="mdl-textfield__error">Please Enter Valid Amount</span>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" id="expenseNote">
-            <label class="mdl-textfield__label" for="expenseNote">Note</label>
+            {{ expense_form.note(class_="mdl-textfield__input") }}
+            <label class="mdl-textfield__label" for="expenseNote">{{ expense_form.note.label }}</label>
             <span class="mdl-textfield__error">Please Enter Valid Note</span>
             </div>
             <button class="form-submit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" name="addExpense">
@@ -34,48 +35,6 @@
                 <i class="material-icons mdl-list__item-avatar">money_off</i>
                 <span>KES 1,500</span>
                 <span class="mdl-list__item-sub-title">Nakumatt</span>
-            </span>
-            <span class="mdl-list__item-secondary-content">
-                <span class="mdl-list__item-secondary-info">19/07/2017</span>
-                <span class="mdl-list__item-secondary-actions">
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">mode_edit</i></a>
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">delete</i></a>
-                </span>
-            </span>
-            </li>
-            <li class="mdl-list__item mdl-list__item--two-line">
-            <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">money_off</i>
-                <span>KES 200</span>
-                <span class="mdl-list__item-sub-title">Kiosk</span>
-            </span>
-            <span class="mdl-list__item-secondary-content">
-                <span class="mdl-list__item-secondary-info">19/07/2017</span>
-                <span class="mdl-list__item-secondary-actions">
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">mode_edit</i></a>
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">delete</i></a>
-                </span>
-            </span>
-            </li>
-            <li class="mdl-list__item mdl-list__item--two-line">
-            <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">money_off</i>
-                <span>KES 250</span>
-                <span class="mdl-list__item-sub-title">Safaricom</span>
-            </span>
-            <span class="mdl-list__item-secondary-content">
-                <span class="mdl-list__item-secondary-info">19/07/2017</span>
-                <span class="mdl-list__item-secondary-actions">
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">mode_edit</i></a>
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">delete</i></a>
-                </span>
-            </span>
-            </li>
-            <li class="mdl-list__item mdl-list__item--two-line">
-            <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">money_off</i>
-                <span>KES 27</span>
-                <span class="mdl-list__item-sub-title">MPESA</span>
             </span>
             <span class="mdl-list__item-secondary-content">
                 <span class="mdl-list__item-secondary-info">19/07/2017</span>
