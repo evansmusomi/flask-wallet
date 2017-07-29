@@ -56,3 +56,24 @@ class DataService:
             return self.USERS[email].expenses
 
         return i18n.t('wallet.wallet_not_found')
+
+    def get_user_expense_by_id(self, expense_id, email):
+        """ Gets user expense by id """
+        if email in self.USERS:
+            for expense in self.USERS[email].expenses:
+                if expense_id == str(expense.id):
+                    return expense
+
+            return i18n.t('wallet.expense_not_found')
+
+        return i18n.t('wallet.wallet_not_found')
+
+    def update_expense(self, email, expense_id, amount, note):
+        """ Updates user expense """
+        if email in self.USERS:
+            for expense in self.USERS[email].expenses:
+                if expense_id == expense.id:
+                    expense.update(amount, note)
+                    return i18n.t('wallet.expense_updated')
+
+        return i18n.t('wallet.wallet_not_found')

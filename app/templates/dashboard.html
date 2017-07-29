@@ -10,7 +10,7 @@
     <div class="wallet-padded-mini wallet-dashboard-section mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
         <div class="wallet-slogan">KES {{ balance }}</div>
         <div class="wallet-sub-slogan">Left to spend!</div>
-        <form class="wallet-expense" method="POST" action="/add_expense">
+        <form class="wallet-expense" method="POST" action="/expenses">
             {{ expense_form.hidden_tag() }}
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             {{ expense_form.amount(class_="mdl-textfield__input", type="number") }}
@@ -40,7 +40,7 @@
             <span class="mdl-list__item-secondary-content">
                 <span class="mdl-list__item-secondary-info">{{ expense['transaction_date'] }}</span>
                 <span class="mdl-list__item-secondary-actions">
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">mode_edit</i></a>
+                <a class="mdl-list__item-secondary-action" href="{{url_for('page_edit_expense', expense_id=expense['id'])}}"><i class="material-icons">mode_edit</i></a>
                 <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">delete</i></a>
                 </span>
             </span>

@@ -2,7 +2,8 @@
 
 from flask import render_template, session, redirect, url_for
 from .middleware import create_account, login, logout
-from .middleware import load_user_balance, add_expense, get_user_expenses
+from .middleware import load_user_balance, get_user_expenses, get_user_expense_by_id
+from .middleware import add_expense, update_expense
 from .forms import SignupForm, LoginForm, AddExpenseForm
 
 
@@ -38,6 +39,16 @@ def page_dashboard():
     return render_template('dashboard.html', logged_in=True, balance=account_balance, expense_form=add_expense_form, expenses=user_expenses)
 
 
+def page_edit_expense(expense_id):
+    """ Renders edit expense page """
+
+    if 'email' not in session:
+        return redirect(url_for('page_index'))
+
+    user_expense = get_user_expense_by_id(expense_id)
+    return render_template('edit_expense.html', logged_in=True, expense_form=AddExpenseForm(obj=user_expense), expense_id=expense_id)
+
+
 def initialize_website_routes(app):
     """ Adds website routes to Flask app """
     if app:
@@ -51,5 +62,9 @@ def initialize_website_routes(app):
                          create_account, methods=['POST'])
         app.add_url_rule('/login', 'login', login, methods=['POST'])
         app.add_url_rule('/logout', 'logout', logout, methods=['GET'])
-        app.add_url_rule('/add_expense', 'add_expense',
+        app.add_url_rule('/expenses', 'add_or_update_expense',
                          add_expense, methods=['POST'])
+        app.add_url_rule('/expenses/<string:expense_id>', 'page_edit_expense',
+                         page_edit_expense, methods=['GET'])
+        app.add_url_rule('/expenses/<string:expense_id>', 'update_expense',
+                         update_expense, methods=['POST'])

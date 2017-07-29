@@ -10,3 +10,5 @@ en:
     wallet_not_found: "Wallet not found"
     expense_added: "Expense added"
     expense_invalid: "Invalid expense details"
+    expense_not_found: "Expense not found"
+    expense_updated: "Changes to expense saved successfully"

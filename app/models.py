@@ -1,5 +1,6 @@
 """ Model definitions """
 import uuid
+import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -50,3 +51,9 @@ class Expense:
     def id(self):
         """ Returns expense id property """
         return self.__id
+
+    def update(self, amount, note):
+        """ Updates expense attributes """
+        self.amount = amount
+        self.note = note
+        self.transaction_date = datetime.date.today().strftime('%Y/%m/%d')
