@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<meta name="description" content="Straighten things out in your wallet.">
+<title>Update Expense - Flask Wallet</title>
+{% endblock %}
+
+{% block content %}
+<div class="wallet-padded wallet-colored">
+    <div class="wallet-slogan">Edit Expense</div>
+    <form class="wallet-expense" method="POST" action="/expenses/{{expense_id}}">
+        {{ expense_form.hidden_tag() }}
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{ expense_form.amount(class_="mdl-textfield__input", type="number") }}
+        <label class="mdl-textfield__label" for="expenseAmount">{{ expense_form.amount.label }}</label>
+        <span class="mdl-textfield__error">Please Enter Valid Amount</span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        {{ expense_form.note(class_="mdl-textfield__input") }}
+        <label class="mdl-textfield__label" for="expenseNote">{{ expense_form.note.label }}</label>
+        <span class="mdl-textfield__error">Please Enter Valid Note</span>
+        </div>
+        <button class="form-submit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" name="updateExpense">
+        Save Changes
+        </button>
+    </form>
+</div>
+{% endblock %}

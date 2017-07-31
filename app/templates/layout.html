@@ -27,8 +27,8 @@
     <div class="wallet-header mdl-layout__header mdl-layout__header--waterfall">
       <div class="mdl-layout__header-row">
         <span class="wallet-title mdl-layout-title">
-            <img class="wallet-logo-image" src="{{url_for('static', filename='images/logo.png')}}">
-          </span>
+          <a href="{{url_for('page_index')}}"><img class="wallet-logo-image" src="{{url_for('static', filename='images/logo.png')}}"></a>
+        </span>
         <!-- Add spacer, to align navigation to the right in desktop -->
         <div class="wallet-header-spacer mdl-layout-spacer"></div>
         <div class="wallet-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
@@ -45,11 +45,15 @@
             <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_index')}}">Home</a>
             <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_about')}}">About</a>
             <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_contact')}}">Contacts</a>
+            {% if logged_in %}
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('page_profile')}}">Profile</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="{{url_for('logout')}}">Log Out</a>
+            {% endif %}
           </nav>
         </div>
         <span class="wallet-mobile-title mdl-layout-title">
-            <img class="wallet-logo-image" src="{{url_for('static', filename='images/logo.png')}}">
-          </span>
+          <a href="{{url_for('page_index')}}"><img class="wallet-logo-image" src="{{url_for('static', filename='images/logo.png')}}"></a>
+        </span>
       </div>
     </div>
     {% endblock %}
@@ -63,6 +67,10 @@
         <a class="mdl-navigation__link" href="{{url_for('page_index')}}">Home</a>
         <a class="mdl-navigation__link" href="{{url_for('page_about')}}">About</a>
         <a class="mdl-navigation__link" href="{{url_for('page_contact')}}">Contacts</a>
+        {% if logged_in %}
+        <a class="mdl-navigation__link" href="{{url_for('page_profile')}}">Profile</a>
+        <a class="mdl-navigation__link" href="{{url_for('logout')}}">Log Out</a>
+        {% endif %}
         <span class="mdl-navigation__link" href="">Version: 1.0</span>
       </nav>
     </div>
@@ -70,6 +78,18 @@
 
     <div class="wallet-content mdl-layout__content">
     
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flashes mdl-typography--text-center">
+          {% for category, message in messages %}
+          <span class="mdl-chip {{ category }}">
+              <span class="mdl-chip__text">{{ message }}</span>
+          </span>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     {% block content %}
       
     {% endblock %}
