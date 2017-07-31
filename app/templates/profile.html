@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <meta name="description" content="Make better spending decisions. Keep track of your finances.">
+    <title>Profile - Flask Wallet</title>
+{% endblock %}
+
+{% block content %}
+<div class="content-grid mdl-grid">
+    <div class="wallet-padded-mini wallet-profile mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+        <div class="wallet-slogan">Your Profile</div>
+
+        <ul class="mdl-list">
+            <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">person</i>
+                {{ account.name }}
+            </span>
+            </li>
+            <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">email</i>
+                {{ account.email }}
+            </span>
+            </li>
+            <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">attach_money</i>
+                KES {{ account.get_balance() }}
+            </span>
+            </li>
+            <li class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">code</i>
+                    {{ account.id }}
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="wallet-padded-mini wallet-topup-section mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+    
+    </div>
+</div>
+{% endblock %}

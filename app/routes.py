@@ -1,7 +1,7 @@
 """ Defines application routes """
 
 from flask import render_template, session, redirect, url_for
-from .middleware import create_account, login, logout
+from .middleware import create_account, login, logout, get_account_details
 from .middleware import load_user_balance, get_user_expenses, get_user_expense_by_id
 from .middleware import add_expense, update_expense, delete_expense
 from .forms import SignupForm, LoginForm, AddExpenseForm
@@ -49,6 +49,16 @@ def page_edit_expense(expense_id):
     return render_template('edit_expense.html', logged_in=True, expense_form=AddExpenseForm(obj=user_expense), expense_id=expense_id)
 
 
+def page_profile():
+    """ Renders user account page """
+
+    if 'email' not in session:
+        return redirect(url_for('page_index'))
+
+    account_details = get_account_details()
+    return render_template('profile.html', logged_in=True, account=account_details)
+
+
 def initialize_website_routes(app):
     """ Adds website routes to Flask app """
     if app:
@@ -70,3 +80,5 @@ def initialize_website_routes(app):
                          update_expense, methods=['POST'])
         app.add_url_rule('/expenses/<string:expense_id>/delete',
                          'delete_expense', delete_expense, methods=['GET'])
+        app.add_url_rule('/profile',
+                         'page_profile', page_profile, methods=['GET'])

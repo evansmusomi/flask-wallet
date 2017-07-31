@@ -162,7 +162,8 @@ a img {
   overflow-y: auto;
 }
 
-.wallet-history .mdl-list__item{
+.wallet-history .mdl-list__item,
+.wallet-profile .mdl-list__item{
   border-bottom: 1px solid #757575;
 }
 

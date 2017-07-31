@@ -130,3 +130,9 @@ def delete_expense(expense_id):
     status = DATA_SERVICE.delete_expense(session['email'], expense_id)
     flash(status, "success")
     return redirect(url_for('page_dashboard'))
+
+
+def get_account_details():
+    """ Gets account details based on an ID """
+    account_details = DATA_SERVICE.get_account_details(session['email'])
+    return account_details

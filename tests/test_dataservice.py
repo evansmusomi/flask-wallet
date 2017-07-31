@@ -136,3 +136,9 @@ class AppTestDataService(unittest.TestCase):
             'john@doe.com', expense.id, 50, 'matatu')
         expected = i18n.t('wallet.expense_updated')
         self.assertEqual(actual, expected)
+
+    def test_get_account_details_OK(self):
+        """ Tests getting account details works """
+        expected = self.dataservice.USERS['john@doe.com']
+        actual = self.dataservice.get_account_details('john@doe.com')
+        self.assertEqual(actual, expected)

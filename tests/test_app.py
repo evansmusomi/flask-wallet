@@ -197,12 +197,13 @@ class AppTestCase(unittest.TestCase):
         self.assertIn(i18n.t('wallet.expense_invalid'),
                       html.unescape(response.data.decode("utf-8")))
 
-    def create_account_and_session(self):
+    def create_account_and_session(self, logged_in=True):
         """ Creates an account and session """
         self.dataservice.create_account('john@doe.com', 'secret', 'John', 500)
 
-        with self.app.session_transaction() as session:
-            session['email'] = 'john@doe.com'
+        if logged_in:
+            with self.app.session_transaction() as session:
+                session['email'] = 'john@doe.com'
 
     def create_expense(self):
         """ Creates example expense by John Doe """
@@ -300,3 +301,20 @@ class AppTestCase(unittest.TestCase):
             "/expenses/{}/delete".format(expense.id))
 
         self.assertEqual(response.status, "302 FOUND")
+
+    def test_profile_restricted_VISITOR(self):
+        """ Tests GET /profile when not logged in """
+        response = self.app.get('/profile')
+        self.assertEqual(response.status, "302 FOUND",
+                         "Response status should be 302 FOUND")
+
+    def test_profile_OK_USER(self):
+        """ Tests GET /profile when logged in """
+        self.create_account_and_session()
+        user = self.dataservice.USERS['john@doe.com']
+
+        response = self.app.get('/profile')
+        self.assertEqual(response.status, "200 OK",
+                         "Response status should be 200 OK")
+        self.assertIn(i18n.t("wallet.profile_details").encode(
+            'utf-8'), response.data)

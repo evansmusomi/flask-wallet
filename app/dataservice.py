@@ -85,3 +85,8 @@ class DataService:
                 if expense_id == expense.id:
                     self.USERS[email].delete_expense(expense)
                     return i18n.t('wallet.expense_deleted')
+
+    def get_account_details(self, email):
+        """ Gets user account details """
+        if email in self.USERS:
+            return self.USERS[email]
