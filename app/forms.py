@@ -49,3 +49,11 @@ class AddExpenseForm(FlaskForm):
 
     note = StringField('Note', validators=[
         DataRequired('Please add a note')])
+
+
+class TopUpForm(FlaskForm):
+    """ Defines the top up form """
+
+    amount = DecimalField('Amount', validators=[
+        DataRequired('Please enter an amount'),
+        NumberRange(min=50, max=100000, message='Deposit should be between 50 and 100000')])

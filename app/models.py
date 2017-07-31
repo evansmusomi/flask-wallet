@@ -27,14 +27,30 @@ class User:
 
     def add_expense(self, expense):
         """ Adds expense to user wallet """
-        self.expenses.append(expense)
-        self.__balance -= expense.amount
+        try:
+            self.expenses.append(expense)
+            self.__balance -= expense.amount
+            return True
+        except:
+            return False
 
     def delete_expense(self, expense):
         """ Deletes an expense from user's wallet """
-        expense_amount = expense.amount
-        self.expenses.remove(expense)
-        self.__balance += expense_amount
+        try:
+            expense_amount = expense.amount
+            self.expenses.remove(expense)
+            self.__balance += expense_amount
+            return True
+        except:
+            return False
+
+    def topup(self, amount):
+        """ Adds specified amount to current balance """
+        try:
+            self.__balance += amount
+            return True
+        except:
+            return False
 
     @property
     def id(self):
@@ -46,12 +62,12 @@ class Expense:
     """ Defines Expense Blueprint """
     __id = None
 
-    def __init__(self, amount, note, transaction_date):
+    def __init__(self, amount, note):
         """ Initializes expense object """
         self.__id = uuid.uuid4().hex[:10].upper()
         self.amount = amount
         self.note = note
-        self.transaction_date = transaction_date
+        self.transaction_date = transaction_date = datetime.date.today().strftime('%Y/%m/%d')
 
     @property
     def id(self):

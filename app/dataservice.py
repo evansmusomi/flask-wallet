@@ -1,5 +1,4 @@
 """ Defines data layer wrapper """
-import datetime
 import i18n
 from .models import User, Expense
 
@@ -43,8 +42,7 @@ class DataService:
     def add_expense(self, email, amount, note):
         """ Adds expense to user account """
         if email in self.USERS:
-            transaction_date = datetime.date.today().strftime('%Y/%m/%d')
-            expense = Expense(amount, note, transaction_date)
+            expense = Expense(amount, note)
             self.USERS[email].add_expense(expense)
             return i18n.t('wallet.expense_added')
 
@@ -90,3 +88,11 @@ class DataService:
         """ Gets user account details """
         if email in self.USERS:
             return self.USERS[email]
+
+    def topup_account(self, email, amount):
+        """ Tops up user account with specified amount """
+        if email in self.USERS:
+            if self.USERS[email].topup(amount):
+                return i18n.t('wallet.topup_successful')
+
+            return i18n.t('wallet.topup_unsuccessful')

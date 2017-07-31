@@ -1,6 +1,5 @@
 """ Contains application tests mapped to models defined """
 import unittest
-import datetime
 import random
 from app.models import User, Expense
 
@@ -28,12 +27,41 @@ class AppTestUser(unittest.TestCase):
 
     def test_add_expense_OK(self):
         """ Tests valid expense is added """
-        transaction_date = datetime.datetime(2017, 7, 27)
-        expense = Expense(50, 'matatu', transaction_date)
+        expense = Expense(50, 'matatu')
         self.user.add_expense(expense)
         self.assertEqual(len(self.user.expenses), 1)
         self.assertEqual(self.user.expenses[0].amount, 50)
         self.assertEqual(self.user.get_balance(), 150)
+
+    def test_add_expense_INVALID(self):
+        """ Tests adding an invalid expense """
+        expense = "invalid expense"
+        actual = self.user.add_expense(expense)
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_delete_expense_OK(self):
+        """ Tests expense is deleted correctly """
+        expense = Expense(50, 'taxi')
+        self.user.add_expense(expense)
+        self.assertTrue(self.user.delete_expense(expense))
+        self.assertEqual(len(self.user.expenses), 0)
+
+    def test_delete_expense_INVALID(self):
+        """ Tests failure deleting an expense """
+        expense = "invalid expense"
+        actual = self.user.delete_expense(expense)
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_topup_OK(self):
+        """ Tests top up works ok """
+        initial_balance = self.user.get_balance()
+        self.user.topup(500)
+
+        expected = initial_balance + 500
+        actual = self.user.get_balance()
+        self.assertEqual(actual, expected)
 
 
 class AppTestExpense(unittest.TestCase):
@@ -41,9 +69,7 @@ class AppTestExpense(unittest.TestCase):
 
     def setUp(self):
         """ Sets up env for tests """
-        transaction_date = datetime.datetime(
-            2017, random.randint(1, 7), random.randint(1, 28))
-        self.expense = Expense(30, 'matatu', transaction_date)
+        self.expense = Expense(30, 'matatu')
 
     def test_expense_OK(self):
         """ Validates expense object """

@@ -38,7 +38,18 @@
         </ul>
     </div>
     <div class="wallet-padded-mini wallet-topup-section mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-    
+        <div class="wallet-slogan">Deposit Money</div>
+        <form class="wallet-expense" method="POST" action="/topup">
+            {{ topup_form.hidden_tag() }}
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            {{ topup_form.amount(class_="mdl-textfield__input", type="number") }}
+            <label class="mdl-textfield__label" for="topupAmount">{{ topup_form.amount.label }}</label>
+            <span class="mdl-textfield__error">Please Enter Valid Amount</span>
+            </div>
+            <button class="form-submit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" name="topUp">
+            Top Up
+            </button>
+        </form>
     </div>
 </div>
 {% endblock %}

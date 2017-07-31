@@ -142,3 +142,9 @@ class AppTestDataService(unittest.TestCase):
         expected = self.dataservice.USERS['john@doe.com']
         actual = self.dataservice.get_account_details('john@doe.com')
         self.assertEqual(actual, expected)
+
+    def test_topup_account_INVALID(self):
+        """ Tests topping up account with invalid details """
+        actual = self.dataservice.topup_account("john@doe.com", "amount")
+        expected = i18n.t('wallet.topup_unsuccessful')
+        self.assertEqual(actual, expected)

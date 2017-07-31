@@ -3,7 +3,7 @@
 from flask import render_template, redirect, url_for, flash, session, request
 import i18n
 
-from .forms import SignupForm, LoginForm, AddExpenseForm
+from .forms import SignupForm, LoginForm, AddExpenseForm, TopUpForm
 from .dataservice import DataService
 
 # Add locales folder to translation path
@@ -136,3 +136,20 @@ def get_account_details():
     """ Gets account details based on an ID """
     account_details = DATA_SERVICE.get_account_details(session['email'])
     return account_details
+
+
+def topup():
+    """ Tops up user account with specified amount """
+    if 'email' not in session:
+        return redirect(url_for('page_index'))
+
+    form = TopUpForm()
+
+    if form.validate():
+        status = DATA_SERVICE.topup_account(session['email'], form.amount.data)
+        flash(status, "success")
+        return redirect(url_for('page_profile'))
+
+    flash(i18n.t('wallet.topup_invalid'), "error")
+    account_details = get_account_details()
+    return render_template('profile.html', logged_in=True, account=account_details, topup_form=TopUpForm())

@@ -14,3 +14,6 @@ en:
     expense_updated: "Changes to expense saved successfully"
     expense_deleted: "Expense deleted successfully"
     profile_details: "Your Profile"
+    topup_successful: "Top up successful"
+    topup_invalid: "Top up invalid"
+    topup_unsuccessful: "Top up unsuccessful"

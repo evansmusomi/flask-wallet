@@ -3,8 +3,8 @@
 from flask import render_template, session, redirect, url_for
 from .middleware import create_account, login, logout, get_account_details
 from .middleware import load_user_balance, get_user_expenses, get_user_expense_by_id
-from .middleware import add_expense, update_expense, delete_expense
-from .forms import SignupForm, LoginForm, AddExpenseForm
+from .middleware import add_expense, update_expense, delete_expense, topup
+from .forms import SignupForm, LoginForm, AddExpenseForm, TopUpForm
 
 
 def page_index():
@@ -56,7 +56,7 @@ def page_profile():
         return redirect(url_for('page_index'))
 
     account_details = get_account_details()
-    return render_template('profile.html', logged_in=True, account=account_details)
+    return render_template('profile.html', logged_in=True, account=account_details, topup_form=TopUpForm())
 
 
 def initialize_website_routes(app):
@@ -82,3 +82,4 @@ def initialize_website_routes(app):
                          'delete_expense', delete_expense, methods=['GET'])
         app.add_url_rule('/profile',
                          'page_profile', page_profile, methods=['GET'])
+        app.add_url_rule('/topup', 'topup', topup, methods=['POST'])

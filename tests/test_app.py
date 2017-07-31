@@ -318,3 +318,37 @@ class AppTestCase(unittest.TestCase):
                          "Response status should be 200 OK")
         self.assertIn(i18n.t("wallet.profile_details").encode(
             'utf-8'), response.data)
+
+    def test_topup_account_OK(self):
+        """ Tests POST /topup when logged in """
+        self.create_account_and_session()
+        topup_info = dict(amount=500)
+
+        response = self.app.post(
+            '/topup', data=topup_info, follow_redirects=True)
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t("wallet.topup_successful").encode(
+            'utf-8'), response.data)
+
+    def test_topup_account_INVALID(self):
+        """ Tests POST /topup with invalid details """
+        self.create_account_and_session()
+        topup_info = dict(deposit=500)
+
+        response = self.app.post(
+            '/topup', data=topup_info)
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t("wallet.topup_invalid").encode(
+            'utf-8'), response.data)
+
+    def test_topup_account_VISITOR(self):
+        """ Tests POST /topup when NOT logged in """
+
+        topup_info = dict(amount=500)
+
+        response = self.app.post(
+            '/topup', data=topup_info)
+
+        self.assertEqual(response.status, "302 FOUND")
