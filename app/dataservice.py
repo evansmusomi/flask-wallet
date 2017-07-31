@@ -77,3 +77,11 @@ class DataService:
                     return i18n.t('wallet.expense_updated')
 
         return i18n.t('wallet.wallet_not_found')
+
+    def delete_expense(self, email, expense_id):
+        """ Deletes user expense """
+        if email in self.USERS:
+            for expense in self.USERS[email].expenses:
+                if expense_id == expense.id:
+                    self.USERS[email].delete_expense(expense)
+                    return i18n.t('wallet.expense_deleted')

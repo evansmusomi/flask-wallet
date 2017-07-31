@@ -41,7 +41,7 @@
                 <span class="mdl-list__item-secondary-info">{{ expense['transaction_date'] }}</span>
                 <span class="mdl-list__item-secondary-actions">
                 <a class="mdl-list__item-secondary-action" href="{{url_for('page_edit_expense', expense_id=expense['id'])}}"><i class="material-icons">mode_edit</i></a>
-                <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">delete</i></a>
+                <a class="mdl-list__item-secondary-action" href="{{url_for('delete_expense', expense_id=expense['id'])}}"><i class="material-icons">delete</i></a>
                 </span>
             </span>
             </li>

@@ -3,7 +3,7 @@
 from flask import render_template, session, redirect, url_for
 from .middleware import create_account, login, logout
 from .middleware import load_user_balance, get_user_expenses, get_user_expense_by_id
-from .middleware import add_expense, update_expense
+from .middleware import add_expense, update_expense, delete_expense
 from .forms import SignupForm, LoginForm, AddExpenseForm
 
 
@@ -62,9 +62,11 @@ def initialize_website_routes(app):
                          create_account, methods=['POST'])
         app.add_url_rule('/login', 'login', login, methods=['POST'])
         app.add_url_rule('/logout', 'logout', logout, methods=['GET'])
-        app.add_url_rule('/expenses', 'add_or_update_expense',
+        app.add_url_rule('/expenses', 'add_expense',
                          add_expense, methods=['POST'])
         app.add_url_rule('/expenses/<string:expense_id>', 'page_edit_expense',
                          page_edit_expense, methods=['GET'])
         app.add_url_rule('/expenses/<string:expense_id>', 'update_expense',
                          update_expense, methods=['POST'])
+        app.add_url_rule('/expenses/<string:expense_id>/delete',
+                         'delete_expense', delete_expense, methods=['GET'])

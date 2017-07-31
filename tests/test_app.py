@@ -278,3 +278,25 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.status, "200 OK")
         self.assertIn(i18n.t('wallet.expense_invalid'),
                       html.unescape(response.data.decode("utf-8")))
+
+    def test_delete_expense_OK(self):
+        """ Tests deleting expense works """
+        self.create_account_and_session()
+
+        expense = self.create_expense()
+
+        response = self.app.get(
+            "/expenses/{}/delete".format(expense.id), follow_redirects=True)
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t('wallet.expense_deleted'),
+                      html.unescape(response.data.decode("utf-8")))
+
+    def test_delete_expense_LOGGED_OUT(self):
+        """ Tests deleting expense when logged out """
+        expense = self.create_expense()
+
+        response = self.app.get(
+            "/expenses/{}/delete".format(expense.id))
+
+        self.assertEqual(response.status, "302 FOUND")

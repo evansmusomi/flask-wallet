@@ -103,7 +103,7 @@ def get_user_expense_by_id(expense_id):
 
 
 def update_expense(expense_id):
-    """ Updates expense to logged in users wallet """
+    """ Updates expense to logged in user's wallet """
     if 'email' not in session:
         return redirect(url_for('page_index'))
 
@@ -119,3 +119,14 @@ def update_expense(expense_id):
     flash(i18n.t('wallet.expense_invalid'), "error")
     user_expense = get_user_expense_by_id(expense_id)
     return render_template('edit_expense.html', logged_in=True, expense_form=AddExpenseForm(obj=user_expense))
+
+
+def delete_expense(expense_id):
+    """ Deletes expense from logged in user's wallet """
+    if 'email' not in session:
+        return redirect(url_for('page_index'))
+
+    user_expense = get_user_expense_by_id(expense_id)
+    status = DATA_SERVICE.delete_expense(session['email'], expense_id)
+    flash(status, "success")
+    return redirect(url_for('page_dashboard'))

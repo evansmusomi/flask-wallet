@@ -30,6 +30,12 @@ class User:
         self.expenses.append(expense)
         self.__balance -= expense.amount
 
+    def delete_expense(self, expense):
+        """ Deletes an expense from user's wallet """
+        expense_amount = expense.amount
+        self.expenses.remove(expense)
+        self.__balance += expense_amount
+
     @property
     def id(self):
         """ Returns user id property """
