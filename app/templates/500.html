@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <meta name="description" content="Not found on Flask Wallet.">
+    <title>Server Crashed - Flask Wallet</title>
+{% endblock %}
+
+{% block content %}
+<div class="wallet-padded wallet-colored mdl-typography--text-center">
+    <div class="wallet-slogan">We're sorry!</div>
+    <div class="wallet-sub-slogan">Server crashed :( Get back to our <a href="{{url_for('page_index')}}">Home Page</a> to continue browsing.</div>
+</div>
+{% endblock %}

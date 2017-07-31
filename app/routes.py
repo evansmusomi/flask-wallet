@@ -1,6 +1,6 @@
 """ Defines application routes """
 
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session, redirect, url_for, flash, abort
 from .middleware import create_account, login, logout, get_account_details
 from .middleware import load_user_balance, get_user_expenses, get_user_expense_by_id
 from .middleware import add_expense, update_expense, delete_expense, topup
@@ -59,6 +59,11 @@ def page_profile():
     return render_template('profile.html', logged_in=True, account=account_details, topup_form=TopUpForm())
 
 
+def crash_server():
+    """ Triggers an error 500 """
+    abort(500)
+
+
 def initialize_website_routes(app):
     """ Adds website routes to Flask app """
     if app:
@@ -83,3 +88,24 @@ def initialize_website_routes(app):
         app.add_url_rule('/profile',
                          'page_profile', page_profile, methods=['GET'])
         app.add_url_rule('/topup', 'topup', topup, methods=['POST'])
+        app.add_url_rule('/crash', 'crash_server',
+                         crash_server, methods=['GET'])
+
+
+def handle_error_404(error):
+    """ Handles 404 error """
+    flash("Server says: {}".format(error), "error")
+    return render_template('404.html', logged_in=False)
+
+
+def handle_error_500(error):
+    """ Handles 500 error """
+    flash("Server says: {}".format(error), "error")
+    return render_template('500.html', logged_in=False)
+
+
+def initialize_error_handlers(app):
+    """ Initializes application level error handlers """
+    if app:
+        app.register_error_handler(404, handle_error_404)
+        app.register_error_handler(500, handle_error_500)

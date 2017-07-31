@@ -352,3 +352,18 @@ class AppTestCase(unittest.TestCase):
             '/topup', data=topup_info)
 
         self.assertEqual(response.status, "302 FOUND")
+
+    def test_404_handler_OK(self):
+        """ Tests calling an absent page renders 404 page """
+        response = self.app.get('/absent-page')
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t("wallet.sorry").encode(
+            'utf-8'), response.data)
+
+    def test_500_handler_OK(self):
+        """ Tests server crash renders 500 page """
+        response = self.app.get('/crash')
+
+        self.assertEqual(response.status, "200 OK")
+        self.assertIn(i18n.t("wallet.sorry").encode('utf-8'), response.data)
