@@ -43,8 +43,10 @@ class DataService:
         """ Adds expense to user account """
         if email in self.USERS:
             expense = Expense(amount, note)
-            self.USERS[email].add_expense(expense)
-            return i18n.t('wallet.expense_added')
+            if self.USERS[email].add_expense(expense):
+                return i18n.t('wallet.expense_added')
+            else:
+                return i18n.t('wallet.expense_not_added')
 
         return i18n.t('wallet.wallet_not_found')
 
