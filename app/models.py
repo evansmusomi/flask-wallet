@@ -28,9 +28,12 @@ class User:
     def add_expense(self, expense):
         """ Adds expense to user wallet """
         try:
-            self.expenses.append(expense)
-            self.__balance -= expense.amount
-            return True
+            if expense.amount < self.__balance:
+                self.expenses.append(expense)
+                self.__balance -= expense.amount
+                return True
+            else:
+                return False
         except:
             return False
 

@@ -19,12 +19,22 @@ def page_index():
 
 def page_about():
     """ Renders about page """
-    return render_template('about.html')
+    logged_in = False
+
+    if 'email' in session:
+        logged_in = True
+
+    return render_template('about.html', logged_in=logged_in)
 
 
 def page_contact():
     """ Renders contact page """
-    return render_template('contact.html')
+    logged_in = False
+
+    if 'email' in session:
+        logged_in = True
+
+    return render_template('contact.html', logged_in=logged_in)
 
 
 def page_dashboard():
@@ -92,20 +102,24 @@ def initialize_website_routes(app):
                          crash_server, methods=['GET'])
 
 
-def handle_error_404(error):
-    """ Handles 404 error """
+def handle_error_code(code, error):
+    """ Handles error codes """
     flash("Server says: {}".format(error), "error")
-    return render_template('404.html', logged_in=False)
+    return render_template("{}.html".format(code), logged_in=False)
 
 
-def handle_error_500(error):
-    """ Handles 500 error """
-    flash("Server says: {}".format(error), "error")
-    return render_template('500.html', logged_in=False)
+def handle_error_code_404(error):
+    """ Handles 404 error codes """
+    return handle_error_code(404, error)
+
+
+def handle_error_code_500(error):
+    """ Handles 404 error codes """
+    return handle_error_code(500, error)
 
 
 def initialize_error_handlers(app):
     """ Initializes application level error handlers """
     if app:
-        app.register_error_handler(404, handle_error_404)
-        app.register_error_handler(500, handle_error_500)
+        app.register_error_handler(404, handle_error_code_404)
+        app.register_error_handler(500, handle_error_code_500)
