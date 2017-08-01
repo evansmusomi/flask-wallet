@@ -13,6 +13,14 @@ i18n.load_path.append('app/locales')
 DATA_SERVICE = DataService()
 
 
+def is_logged_in():
+    """ Returns true if logged in """
+    if 'email' in session:
+        return True
+    else:
+        return False
+
+
 def create_account():
     """ Creates new user account from signup form data """
 
@@ -72,7 +80,7 @@ def load_user_balance():
 
 def add_expense():
     """ Adds expense to logged in users wallet """
-    if 'email' not in session:
+    if not is_logged_in():
         return redirect(url_for('page_index'))
 
     form = AddExpenseForm()
@@ -104,7 +112,7 @@ def get_user_expense_by_id(expense_id):
 
 def update_expense(expense_id):
     """ Updates expense to logged in user's wallet """
-    if 'email' not in session:
+    if not is_logged_in():
         return redirect(url_for('page_index'))
 
     user_expense = get_user_expense_by_id(expense_id)
@@ -123,7 +131,7 @@ def update_expense(expense_id):
 
 def delete_expense(expense_id):
     """ Deletes expense from logged in user's wallet """
-    if 'email' not in session:
+    if not is_logged_in():
         return redirect(url_for('page_index'))
 
     user_expense = get_user_expense_by_id(expense_id)
@@ -140,7 +148,7 @@ def get_account_details():
 
 def topup():
     """ Tops up user account with specified amount """
-    if 'email' not in session:
+    if not is_logged_in():
         return redirect(url_for('page_index'))
 
     form = TopUpForm()
