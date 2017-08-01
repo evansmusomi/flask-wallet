@@ -1,6 +1,7 @@
 """ Defines application routes """
 
 from flask import render_template, session, redirect, url_for, flash, abort
+from .middleware import is_logged_in
 from .middleware import create_account, login, logout, get_account_details
 from .middleware import load_user_balance, get_user_expenses, get_user_expense_by_id
 from .middleware import add_expense, update_expense, delete_expense, topup
@@ -9,7 +10,7 @@ from .forms import SignupForm, LoginForm, AddExpenseForm, TopUpForm
 
 def page_index():
     """ Renders index page """
-    if 'email' in session:
+    if is_logged_in():
         return redirect(url_for('page_dashboard'))
 
     signup_form = SignupForm()
@@ -19,20 +20,14 @@ def page_index():
 
 def page_about():
     """ Renders about page """
-    logged_in = False
-
-    if 'email' in session:
-        logged_in = True
+    logged_in = is_logged_in()
 
     return render_template('about.html', logged_in=logged_in)
 
 
 def page_contact():
     """ Renders contact page """
-    logged_in = False
-
-    if 'email' in session:
-        logged_in = True
+    logged_in = is_logged_in()
 
     return render_template('contact.html', logged_in=logged_in)
 
@@ -40,7 +35,7 @@ def page_contact():
 def page_dashboard():
     """ Renders dashboard page """
 
-    if 'email' not in session:
+    if not is_logged_in():
         return redirect(url_for('page_index'))
 
     account_balance = load_user_balance()
@@ -52,7 +47,7 @@ def page_dashboard():
 def page_edit_expense(expense_id):
     """ Renders edit expense page """
 
-    if 'email' not in session:
+    if not is_logged_in():
         return redirect(url_for('page_index'))
 
     user_expense = get_user_expense_by_id(expense_id)
@@ -62,7 +57,7 @@ def page_edit_expense(expense_id):
 def page_profile():
     """ Renders user account page """
 
-    if 'email' not in session:
+    if not is_logged_in():
         return redirect(url_for('page_index'))
 
     account_details = get_account_details()
