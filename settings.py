@@ -1,9 +1,9 @@
 """ Loads environment configuration """
 import os
+from os.path import join, dirname
 from dotenv import load_dotenv
 
-APP_ROOT = os.path.join(os.path.dirname(__file__), '')
-dotenv_path = os.path.join(APP_ROOT, '.env')
+dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 
