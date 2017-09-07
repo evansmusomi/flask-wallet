@@ -70,7 +70,7 @@ class Expense:
         self.__id = uuid.uuid4().hex[:10].upper()
         self.amount = amount
         self.note = note
-        self.transaction_date = transaction_date = datetime.date.today().strftime('%Y/%m/%d')
+        self.transaction_date = datetime.date.today().strftime('%Y/%m/%d')
 
     @property
     def id(self):
